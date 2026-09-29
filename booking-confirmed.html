@@ -197,10 +197,11 @@ a{color:var(--text)}a:hover{color:var(--red)}
 <div class="bk-ok" id="ndaDone" hidden><div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><h3>NDA signed.</h3><p>Whatever Tech will countersign and email you a copy. Now share your files with peace of mind.</p><div class="nda-done-a"><button type="button" class="btn btn-ghost" id="ndaPrint">Save a copy (PDF)</button><button type="button" class="btn btn-red" data-nda-close>Back to my files <i class="msi" data-i="arrow"></i></button></div></div>
 </div></div>
 <script src="aitp.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="nda.js"></script>
 <script>
 (function(){
-var zone=document.getElementById('bkZone'),inp=document.getElementById('bkFile'),list=document.getElementById('bkList'),err=document.getElementById('bkErr'),files=[],MAX=25*1024*1024;
+var zone=document.getElementById('bkZone'),inp=document.getElementById('bkFile'),list=document.getElementById('bkList'),err=document.getElementById('bkErr'),files=[],MAX=25*1024*1024,HOOK='https://n8n.whatever.tech/webhook/a40789d0-c493-44ab-9087-add5e3611c16';
 function fmt(b){return b<1024*1024?Math.max(1,Math.round(b/1024))+' KB':(b/1048576).toFixed(1)+' MB'}
 function render(){list.innerHTML=files.map(function(f,i){return '<li><span class="nm"></span><span class="sz">'+fmt(f.size)+'</span><button type="button" data-rm="'+i+'" aria-label="Remove file">×</button></li>'}).join('');[].forEach.call(list.querySelectorAll('.nm'),function(el,i){el.textContent=files[i].name});}
 function add(fl){var big=[];[].forEach.call(fl,function(f){if(f.size>MAX)big.push(f.name);else if(!files.some(function(x){return x.name===f.name&&x.size===f.size}))files.push(f)});err.hidden=!big.length;if(big.length)err.textContent='Too large (max 25 MB): '+big.join(', ');render();}
@@ -211,8 +212,19 @@ zone.addEventListener('drop',function(e){if(e.dataTransfer&&e.dataTransfer.files
 list.addEventListener('click',function(e){var b=e.target.closest('[data-rm]');if(!b)return;files.splice(+b.dataset.rm,1);render();});
 document.getElementById('bkForm').addEventListener('submit',function(e){e.preventDefault();var msg=document.getElementById('bkMsg').value.trim();
 if(!files.length&&!msg){err.hidden=false;err.textContent='Add a file or a note first. Or skip this step, it\'s optional.';return;}
-/* window.WT_NDA holds the signed NDA record if signed. TODO: send files + msg + WT_NDA (+ Calendly invitee email from URL ?invitee_email=) to n8n/Zapier webhook → monday lead item */
-this.hidden=true;document.getElementById('bkOk').hidden=false;});
+var form=this,btn=form.querySelector('[type=submit]'),fd=new FormData(),nda=window.WT_NDA;
+fd.append('message',msg);fd.append('submittedAt',new Date().toISOString());fd.append('page',location.href);fd.append('userAgent',navigator.userAgent);
+new URLSearchParams(location.search).forEach(function(val,k){fd.append(k,val)});
+files.forEach(function(f,i){fd.append('file_'+i,f,f.name)});fd.append('fileCount',files.length);
+fd.append('ndaSigned',nda?'true':'false');
+if(nda){['company','entity','address','signer','title','email','date','signedAt','userAgent'].forEach(function(k){fd.append('nda_'+k,nda[k])});fd.append('nda_agreementHTML',nda.agreementHTML);
+var b=atob(nda.signature.split(',')[1]),u=new Uint8Array(b.length);for(var j=0;j<b.length;j++)u[j]=b.charCodeAt(j);fd.append('nda_signature',new Blob([u],{type:'image/png'}),'nda-signature.png');}
+err.hidden=true;btn.disabled=true;btn.firstChild.textContent='Sending… ';
+(nda?window.WT_NDA_PDF().catch(function(){return null}):Promise.resolve(null)).then(function(pdf){
+if(pdf)fd.append('nda_pdf',pdf,'NDA - '+nda.company.replace(/[\\\/:*?"<>|]/g,'')+' - Whatever Tech.pdf');
+return fetch(HOOK,{method:'POST',body:fd});}).then(function(r){if(!r.ok)throw new Error(r.status);
+form.hidden=true;document.getElementById('bkOk').hidden=false;}).catch(function(){
+btn.disabled=false;btn.firstChild.textContent='Send to our team ';err.hidden=false;err.textContent='Something went wrong sending your files. Please try again.';});});
 })();
 </script>
 </body>
