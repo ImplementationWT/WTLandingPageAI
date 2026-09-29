@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You're booked · Whatever Tech</title>
+<meta property="og:title" content="You're booked · Whatever Tech">
+<meta property="og:description" content="Share your files so we can build a demo around your real operation.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Whatever Tech">
+<meta property="og:image" content="https://whatever.tech/assets/og-landing.png">
+<meta property="og:image:secure_url" content="https://whatever.tech/assets/og-landing.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Whatever Tech logo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://whatever.tech/assets/og-landing.png">
+<link rel="icon" type="image/png" href="assets/favicon-wt.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="aitp.css">
+<style>
+a{color:var(--text)}a:hover{color:var(--red)}
+.bk{padding:150px 0 90px;min-height:100vh}
+.bk-head{max-width:820px}
+.bk-head .h2{font-size:clamp(38px,5.4vw,68px)}
+.bk-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px;align-items:center;margin-top:64px}
+.bk-bot{position:relative;display:flex;flex-direction:column;align-items:center}
+.bk-bubble{position:relative;align-self:stretch;background:var(--surface2,#16171d);border:1px solid var(--border2);border-radius:18px;padding:18px 22px;font-size:17px;line-height:1.45;color:var(--text);margin-bottom:26px;text-wrap:pretty}
+.bk-bubble b{color:var(--red)}
+.bk-bubble::after{content:'';position:absolute;left:50%;bottom:-9px;width:16px;height:16px;background:inherit;border-right:1px solid var(--border2);border-bottom:1px solid var(--border2);transform:translateX(-50%) rotate(45deg)}
+.bk-bot .dm-bot{position:relative;right:auto;top:auto;width:min(260px,70%)}
+.bk-drop{background:var(--surface,#111217);border:1px solid var(--border2);border-radius:22px;padding:28px}
+.bk-k{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);display:flex;justify-content:space-between;gap:12px;margin-bottom:16px}
+.bk-zone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;min-height:230px;padding:30px 20px;border:1.5px dashed var(--border2);border-radius:16px;transition:border-color .2s,background .2s;cursor:pointer}
+.bk-zone:hover,.bk-zone.over{border-color:var(--red);background:rgba(255,48,84,.06)}
+.bk-zone svg{width:40px;height:40px;color:var(--red)}
+.bk-zone strong{font-size:19px;font-weight:700}
+.bk-zone span{font-size:14px;color:var(--text-3)}
+.bk-zone input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.bk-list{list-style:none;display:grid;gap:8px;margin-top:14px}
+.bk-list li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid var(--border)}
+.bk-list .nm{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bk-list .sz{font-family:var(--mono);font-size:12px;color:var(--text-3)}
+.bk-list button{background:none;border:0;color:var(--text-3);font-size:20px;line-height:1;width:32px;height:32px;border-radius:8px}
+.bk-list button:hover{color:var(--red)}
+.bk-note{margin-top:16px}
+.bk-note textarea{width:100%;min-height:84px;resize:vertical;background:transparent;border:1px solid var(--border2);border-radius:12px;padding:12px 14px;color:var(--text);font:inherit;font-size:15px}
+.bk-note textarea:focus{outline:none;border-color:var(--red)}
+.bk-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px}
+.bk-actions small{font-size:13px;color:var(--text-3)}
+.bk-err{color:var(--red);font-size:14px;margin-top:10px}
+.bk-ok{text-align:center;padding:40px 10px}
+.bk-ok .ck{width:60px;height:60px;border-radius:50%;background:var(--red);display:grid;place-items:center;margin:0 auto 18px}
+.bk-ok .ck svg{width:28px;height:28px;color:#fff}
+.bk-ok h3{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.bk-ok p{color:var(--text-2);margin-top:8px}
+.bk-web{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:72px;padding-top:36px;border-top:1px solid var(--border)}
+.bk-web p{font-size:18px;color:var(--text-2);max-width:560px}
+.bk-nda{margin-top:16px}
+.bk-nda-btn{width:100%;display:flex;align-items:center;gap:14px;text-align:left;background:rgba(79,117,255,.07);border:1px solid rgba(79,117,255,.35);border-radius:12px;padding:14px 16px;color:var(--text-2);font:inherit;font-size:14.5px;transition:border-color .2s,background .2s}
+.bk-nda-btn:hover{border-color:var(--blue);background:rgba(79,117,255,.12)}
+.bk-nda-btn b{color:var(--text)}.bk-nda-btn svg,.bk-nda-ok svg{width:24px;height:24px;flex:none;color:var(--blue)}
+.bk-nda-ok[hidden],.bk-nda-btn[hidden]{display:none}
+.bk-nda-ok{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;border:1px solid rgba(0,200,117,.4);background:rgba(0,200,117,.08);font-size:14.5px;color:var(--text-2)}.bk-nda-ok svg{color:var(--green)}.bk-nda-ok b{color:var(--text)}
+.nda{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
+.nda[hidden]{display:none}
+.nda-scrim{position:absolute;inset:0;background:rgba(5,5,8,.8);backdrop-filter:blur(6px)}
+.nda-card{position:relative;width:min(1180px,100%);max-height:calc(100vh - 48px);overflow:auto;background:#111217;border:1px solid var(--border2);border-radius:22px;padding:30px}
+.nda-x{position:absolute;top:14px;right:16px;width:40px;height:40px;border-radius:50%;background:transparent;border:1px solid var(--border2);color:var(--text-2);font-size:22px;line-height:1}
+.nda-x:hover{color:var(--text);border-color:var(--text-3)}
+.nda-top .bk-k{padding-right:56px}.nda-top h3{font-size:28px;;font-weight:800;letter-spacing:-.02em}.nda-top p{color:var(--text-2);margin-top:6px;max-width:640px}
+.nda-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:26px;margin-top:22px}
+.nda-doc{background:#f6f5f1;color:#1a1a1a;border-radius:14px;padding:32px 34px;height:min(64vh,640px);overflow:auto;font:13.5px/1.6 Georgia,"Times New Roman",serif}
+.nda-doc p{margin:0 0 11px;text-wrap:pretty}.nda-doc .ind{padding-left:20px}
+.nda-doc .nd-h{text-align:center;font-size:11.5px;letter-spacing:.06em;margin-bottom:14px}
+.nda-doc h4{text-align:center;font-size:18px;text-transform:uppercase;letter-spacing:.05em}
+.nda-doc .nd-sub{text-align:center;margin-bottom:20px;font-style:italic}
+.nda-doc .nf{background:rgba(255,197,73,.35);border-bottom:1px dashed #b58a1b;padding:0 3px;border-radius:2px;color:#6b5210}
+.nda-doc .nf.ok{background:rgba(79,117,255,.14);border-bottom-color:#4f75ff;color:#1b2f7a;font-weight:600}
+.nda-doc .nd-sig{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:20px;font-size:12.5px}
+.nda-doc .nd-k{font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.06em;margin-bottom:6px}
+.nda-doc .nd-line{height:56px;border-bottom:1px solid #222;margin-bottom:8px;display:flex;align-items:flex-end}
+.nda-doc .nd-line img{max-height:52px;max-width:100%}
+.nda-doc .nd-pend{font-size:11px;color:#888;font-style:italic}
+.nda-form{display:flex;flex-direction:column;gap:12px}
+.nda-sec{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-top:6px}
+.nda-form label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--text-2)}
+.nda-form input:not([type=checkbox]){background:transparent;border:1px solid var(--border2);border-radius:10px;padding:12px 13px;color:var(--text);font:inherit;font-size:15px;min-height:46px}
+.nda-form input:focus{outline:none;border-color:var(--red)}
+.nda-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.nda-seg{align-self:flex-start}
+.nda-typed{font-family:"Brush Script MT","Segoe Script","Snell Roundhand",cursive!important;font-size:28px!important;font-style:italic}
+#ndaDrawW{position:relative}
+.nda-pad{display:block;width:100%;height:130px;background:#f6f5f1;border-radius:10px;touch-action:none}
+.nda-clear{position:absolute;top:8px;right:8px;background:#fff;border:1px solid #ccc;border-radius:8px;padding:5px 10px;font-size:12px;color:#333}
+.nda-form label.nda-ck{flex-direction:row;align-items:flex-start;gap:10px;font-size:13px;line-height:1.45}
+.nda-ck input{width:18px;height:18px;margin-top:1px;accent-color:var(--red);flex:none}
+.nda-sub{margin-top:4px;justify-content:center}
+.nda-done-a{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+@media (max-width:900px){.nda{padding:0}.nda-card{max-height:100vh;height:100vh;border-radius:0;padding:22px 18px}.nda-grid{grid-template-columns:minmax(0,1fr)}.nda-doc{height:44vh;padding:22px 20px;font-size:13px}}
+@media (max-width:480px){.nda-2{grid-template-columns:minmax(0,1fr)}.nda-doc .nd-sig{grid-template-columns:1fr}.nda-top h3{font-size:23px;padding-right:44px}.nda-done-a .btn{width:100%}}
+@media (max-width:900px){.bk-grid{grid-template-columns:minmax(0,1fr);gap:24px}.bk-bot{flex-direction:row;gap:18px;align-items:flex-end}.bk-bot .dm-bot{width:170px;flex:none;order:-1}.bk-bubble{margin-bottom:40px;font-size:15.5px}.bk-bubble::after{left:-9px;bottom:22px;transform:rotate(135deg)}}
+@media (max-width:560px){.bk{padding:120px 0 64px}.bk-drop{padding:18px}.bk-zone{min-height:190px}.bk-bot .dm-bot{width:150px}.bk-actions .btn{width:100%}.bk-web .btn{width:100%}}
+@media (max-width:760px){.bk-bot .dm-bot{left:5%;top:12%}}
+@media (min-width:761px) and (max-width:900px){.bk-bot .dm-bot{left:2%;top:19%}}
+@media (min-width:901px){.bk-bubble{transform:translateY(-24px)}.bk-bot .dm-bot{transform:translateY(24px)}}
+</style>
+</head>
+<body>
+<div class="starfield" id="starfield" aria-hidden="true"></div>
+<nav class="top" id="nav">
+<a href="https://whatever.tech/" class="nav-logo"><img src="assets/logo-full-light.png" alt="Whatever Tech"></a>
+<a href="https://whatever.tech/" class="btn btn-ghost">Visit Whatever Tech</a>
+</nav>
+
+<section class="bk" data-screen-label="Booking confirmed">
+<div class="neb" data-t="rL" data-b="bR"></div>
+<div class="container">
+<div class="bk-head">
+<div class="eyebrow">Booking confirmed</div>
+<h1 class="h2">You're booked. <span class="g">Now we build your demo.</span></h1>
+<p class="lead">Thanks. We're reviewing your answers and preparing a demo built around your process. If you can, share a screenshot of your main board below so we can make it even closer to your real operation.</p>
+</div>
+
+<div class="bk-grid">
+<div class="bk-bot">
+<div class="bk-bubble">Hi, I'm <b>Will Doo</b>. Got a screenshot of your board, a process doc or a spreadsheet? Drop it next to me. It helps us build a demo that looks like <b>your</b> business.</div>
+<div class="dm-bot" aria-hidden="true"><span class="bot-glow"></span><img class="bot-img" src="assets/bot-wave.webp" alt=""><span class="bot-rings"><i></i><i></i><i></i></span></div>
+</div>
+
+<div class="bk-drop" id="bkDrop">
+<form id="bkForm" novalidate>
+<div class="bk-k"><span>Share your files</span><span>Optional</span></div>
+<label class="bk-zone" id="bkZone">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+<strong>Drop files here or click to browse</strong>
+<span>Screenshots, PDFs, spreadsheets or docs · up to 25 MB each</span>
+<input type="file" id="bkFile" multiple accept="image/*,.pdf,.csv,.xls,.xlsx,.doc,.docx,.ppt,.pptx,.txt">
+</label>
+<ul class="bk-list" id="bkList"></ul>
+<div class="bk-note"><textarea id="bkMsg" placeholder="Anything else we should know? (optional)"></textarea></div>
+<div class="bk-err" id="bkErr" hidden></div>
+<div class="bk-nda"><button type="button" class="bk-nda-btn" id="ndaOpen" data-nda-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span><b>Want an NDA first?</b> Review and sign our demo NDA before you share anything.</span></button><div class="bk-nda-ok" id="ndaStatus" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>NDA signed for <b></b>. It will be sent with your files.</span></div></div>
+<div class="bk-actions"><small>Only our team sees what you share.</small><button type="submit" class="btn btn-red">Send to our team <i class="msi" data-i="arrow"></i></button></div>
+</form>
+<div class="bk-ok" id="bkOk" hidden>
+<div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+<h3>Got it. Thank you.</h3>
+<p>We'll use this to prepare your demo. See you on the call.</p>
+</div>
+</div>
+</div>
+
+<div class="bk-web">
+<p>While you wait, see how we build operating systems on monday.com.</p>
+<a href="https://whatever.tech/" class="btn btn-ghost">Explore Whatever Tech <i class="msi" data-i="arrow"></i></a>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container foot">
+<div class="foot-l"><a href="https://whatever.tech/"><img src="assets/logo-full-light.png" alt="Whatever Tech"></a><div class="foot-addr"><b>Whatever Tech LLC</b> · 848 Brickell Ave, Ste 950, Miami, FL<br>© 2026 Whatever Tech LLC. All rights reserved.</div></div>
+<div class="foot-r"><img class="mp" src="assets/monday-partner.png" alt="monday.com Partner">
+<a class="soc" href="https://www.upwork.com/freelancers/alejandropanizo?viewMode=1" target="_blank" rel="noopener" aria-label="Upwork profile"><i class="msi" data-i="upwork"></i></a>
+<a class="soc" href="https://www.linkedin.com/in/alejandro-panizo-000b02188/" target="_blank" rel="noopener" aria-label="Alejandro Panizo on LinkedIn"><i class="msi" data-i="linkedin"></i></a>
+</div>
+</div>
+</footer>
+
+<div class="nda" id="ndaModal" hidden><div class="nda-scrim" data-nda-close></div><div class="nda-card" role="dialog" aria-modal="true" aria-labelledby="ndaT">
+<button type="button" class="nda-x" data-nda-close aria-label="Close">×</button>
+<div id="ndaBody">
+<div class="nda-top"><div class="bk-k"><span>Demo NDA</span><span>Whatever Tech, LLC</span></div><h3 id="ndaT">Confidentiality Agreement</h3><p>A one-way NDA: we protect everything you share for your demo. Fill in your details, sign, and it's done.</p></div>
+<div class="nda-grid">
+<div class="nda-doc" id="ndaDoc" tabindex="0" aria-label="Agreement preview"></div>
+<form class="nda-form" id="ndaForm" novalidate>
+<div class="nda-sec">Your company</div>
+<label>Company legal name<input name="company" autocomplete="organization" placeholder="Acme Builders, Inc."></label>
+<label>Entity type<input name="etype" placeholder="Texas corporation, Florida LLC…"></label>
+<label>Business address<input name="addr" autocomplete="street-address" placeholder="Street, city, state"></label>
+<div class="nda-sec">Signer</div>
+<div class="nda-2"><label>Full name<input name="sname" autocomplete="name"></label><label>Title<input name="stitle" autocomplete="organization-title" placeholder="CEO, COO…"></label></div>
+<label>Work email<input name="semail" type="email" autocomplete="email"></label>
+<div class="nda-sec">Signature</div>
+<div class="seg nda-seg"><button type="button" data-sm="type" aria-pressed="true">Type</button><button type="button" data-sm="draw" aria-pressed="false">Draw</button></div>
+<div id="ndaTypeW"><input id="ndaTyped" class="nda-typed" placeholder="Type your full name" aria-label="Typed signature"></div>
+<div id="ndaDrawW" hidden><canvas id="ndaPad" class="nda-pad" aria-label="Draw your signature"></canvas><button type="button" class="nda-clear" id="ndaClear">Clear</button></div>
+<label class="nda-ck"><input type="checkbox" name="consent"><span>I have read this Agreement, I am authorized to sign on behalf of the company above, and I agree to sign electronically.</span></label>
+<div class="bk-err" id="ndaErr" hidden></div>
+<button type="submit" class="btn btn-red nda-sub">Sign NDA <i class="msi" data-i="arrow"></i></button>
+</form>
+</div>
+</div>
+<div class="bk-ok" id="ndaDone" hidden><div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><h3>NDA signed.</h3><p>Whatever Tech will countersign and email you a copy. Now share your files with peace of mind.</p><div class="nda-done-a"><button type="button" class="btn btn-ghost" id="ndaPrint">Save a copy (PDF)</button><button type="button" class="btn btn-red" data-nda-close>Back to my files <i class="msi" data-i="arrow"></i></button></div></div>
+</div></div>
+<script src="aitp.js"></script>
+<script src="nda.js"></script>
+<script>
+(function(){
+var zone=document.getElementById('bkZone'),inp=document.getElementById('bkFile'),list=document.getElementById('bkList'),err=document.getElementById('bkErr'),files=[],MAX=25*1024*1024;
+function fmt(b){return b<1024*1024?Math.max(1,Math.round(b/1024))+' KB':(b/1048576).toFixed(1)+' MB'}
+function render(){list.innerHTML=files.map(function(f,i){return '<li><span class="nm"></span><span class="sz">'+fmt(f.size)+'</span><button type="button" data-rm="'+i+'" aria-label="Remove file">×</button></li>'}).join('');[].forEach.call(list.querySelectorAll('.nm'),function(el,i){el.textContent=files[i].name});}
+function add(fl){var big=[];[].forEach.call(fl,function(f){if(f.size>MAX)big.push(f.name);else if(!files.some(function(x){return x.name===f.name&&x.size===f.size}))files.push(f)});err.hidden=!big.length;if(big.length)err.textContent='Too large (max 25 MB): '+big.join(', ');render();}
+inp.addEventListener('change',function(){add(inp.files);inp.value=''});
+['dragenter','dragover'].forEach(function(t){zone.addEventListener(t,function(e){e.preventDefault();zone.classList.add('over')})});
+['dragleave','drop'].forEach(function(t){zone.addEventListener(t,function(e){e.preventDefault();zone.classList.remove('over')})});
+zone.addEventListener('drop',function(e){if(e.dataTransfer&&e.dataTransfer.files)add(e.dataTransfer.files)});
+list.addEventListener('click',function(e){var b=e.target.closest('[data-rm]');if(!b)return;files.splice(+b.dataset.rm,1);render();});
+document.getElementById('bkForm').addEventListener('submit',function(e){e.preventDefault();var msg=document.getElementById('bkMsg').value.trim();
+if(!files.length&&!msg){err.hidden=false;err.textContent='Add a file or a note first. Or skip this step, it\'s optional.';return;}
+/* window.WT_NDA holds the signed NDA record if signed. TODO: send files + msg + WT_NDA (+ Calendly invitee email from URL ?invitee_email=) to n8n/Zapier webhook → monday lead item */
+this.hidden=true;document.getElementById('bkOk').hidden=false;});
+})();
+</script>
+</body>
+</html>
