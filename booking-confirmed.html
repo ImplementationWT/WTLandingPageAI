@@ -217,8 +217,7 @@ fd.append('message',msg);fd.append('submittedAt',new Date().toISOString());fd.ap
 new URLSearchParams(location.search).forEach(function(val,k){fd.append(k,val)});
 files.forEach(function(f,i){fd.append('file_'+i,f,f.name)});fd.append('fileCount',files.length);
 fd.append('ndaSigned',nda?'true':'false');
-if(nda){['company','entity','address','signer','title','email','date','signedAt','userAgent'].forEach(function(k){fd.append('nda_'+k,nda[k])});fd.append('nda_agreementHTML',nda.agreementHTML);
-var b=atob(nda.signature.split(',')[1]),u=new Uint8Array(b.length);for(var j=0;j<b.length;j++)u[j]=b.charCodeAt(j);fd.append('nda_signature',new Blob([u],{type:'image/png'}),'nda-signature.png');}
+if(nda){['company','entity','address','signer','title','email','date','signedAt','userAgent'].forEach(function(k){fd.append('nda_'+k,nda[k])});fd.append('nda_agreementHTML',nda.agreementHTML);}
 err.hidden=true;btn.disabled=true;btn.firstChild.textContent='Sending… ';
 (nda?window.WT_NDA_PDF().catch(function(){return null}):Promise.resolve(null)).then(function(pdf){
 if(pdf)fd.append('nda_pdf',pdf,'NDA - '+nda.company.replace(/[\\\/:*?"<>|]/g,'')+' - Whatever Tech.pdf');
